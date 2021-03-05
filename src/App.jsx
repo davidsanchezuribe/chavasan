@@ -2,31 +2,74 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
 import ReactDOM from 'react-dom';
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Router } from '@reach/router';
+import { Router, Match } from '@reach/router';
 import withStyle from './withStyle';
-import { LocalizationContext, withLocalization } from './withLocalization';
-// @imports
+import { withLocalization } from './withLocalization';
+import { userStateUtil } from './firebase';
+import SignInForm from './SignInForm.jsx';
+import NavBar from './NavBar.jsx';
+import HomePage from './HomePage.jsx';
 
 const NoMatch = () => <h1>Page Not Found</h1>;
 const basepath = BASE_PATH;
 
-const HomePage = () => {
-  const messages = React.useContext(LocalizationContext);
-  return (
-    <h1>{messages.homepage.helloWorld}</h1>
-  );
-}
+const RoutedApp = () => {
+  const [user, setUser] = useState(null);
+  const [showToast, setShowToast] = useState(false);
+  const [message, setMessage] = useState('');
 
-const RoutedApp = () => (
-  <div> 
-    <Router basepath={basepath}>
-      <HomePage path="/" />
-      <NoMatch default />
-    </Router>
-  </div>
-);
+  const userStatus = (userArg) => {
+    if (userArg) {
+      setUser(userArg.uid);
+    } else {
+      setUser(null);
+    }
+  };
+
+  userStateUtil(userStatus);
+
+  const toast = (messageArg) => {
+    setMessage(messageArg);
+    setShowToast(true);
+  };
+
+  const closeToast = () => {
+    setShowToast(false);
+  };
+
+  return (
+    <div>
+      <Match path="/">
+        {(props) => (
+          <NavBar
+            {...props}
+            showToast={showToast}
+            message={message}
+            closeToast={closeToast}
+            toast={toast}
+          />
+        )}
+      </Match>
+      { user !== null
+        ? (
+          < Router basepath={basepath}>
+            <HomePage path="/" />
+            <NoMatch default />
+          </Router>
+        ) : (
+          <Router basepath={basepath}>
+            <SignInForm
+              path="/"
+              toast={toast}
+            />
+          </Router>
+        )
+      }
+    </div >
+  )
+};
 
 const RoutedAppWithLocalization = withLocalization(RoutedApp);
 const RoutedAppWithStyle = withStyle(RoutedAppWithLocalization);

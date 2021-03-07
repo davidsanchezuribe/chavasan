@@ -2,10 +2,11 @@ import React from 'react';
 import { LocalizationContext } from './withLocalization';
 
 
-const HomePage = () => {
+const HomePage = (props) => {
     const messages = React.useContext(LocalizationContext);
+    const { user } = props;
     return (
-        <h1>{messages.homepage.helloWorld}</h1>
+        <h1>{user}</h1>
     );
 }
 

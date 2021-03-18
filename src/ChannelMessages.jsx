@@ -40,7 +40,7 @@ const ChannelMessages = ({ messages, users }) => {
         <Grid item xs={12} md={8}>
             <Paper style={{ margin: 10 }}>
             <Typography variant="h6" >
-                Mensajes en este canal
+                Mensajes nuevos en este canal
             </Typography>
             <List>
                 {messageList}

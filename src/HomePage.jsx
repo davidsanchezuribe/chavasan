@@ -5,7 +5,7 @@ import Channels from './Channels';
 import ChannelMessages from './ChannelMessages';
 import CreateChannel from './CreateChannel';
 import SendMessage from './SendMessage';
-import { Grid } from '@material-ui/core';
+import { Grid, Button, Box } from '@material-ui/core';
 
 class HomePage extends React.Component {
     constructor() {
@@ -94,8 +94,8 @@ class HomePage extends React.Component {
         });
     }
 
-    sendMessage2Server(message){
-        this.setState({sending: true});
+    sendMessage2Server(message) {
+        this.setState({ sending: true });
         const { backendURL, backendPort } = env;
 
         const { user } = this.props;
@@ -110,13 +110,13 @@ class HomePage extends React.Component {
         }).then((response) => {
             if (response.ok) {
                 this.loadData();
-                this.setState({sending: false});
+                this.setState({ sending: false });
             } else {
                 response.json().then((error) => {
                     alert(`Failed to add issue: ${error.message}`); // eslint-disable-line no-alert
                     //this.props.showAlert(`Failed to add issue: ${error.message}`);
                 });
-                this.setState({sending: false});
+                this.setState({ sending: false });
             }
         }).catch((err) => {
             //this.props.showAlert(`Error in sending data to server: ${err.message}`);
@@ -132,6 +132,13 @@ class HomePage extends React.Component {
         const users = selected ? channelUsers[selected] : {};
         return (
             <Grid item container>
+                <Grid style={{ margin: 10 }} item xs={12} md={12}>
+                    <Box textAlign='center'>
+                        <Button variant="contained" color="primary" onClick={()=>{this.loadData()}}>
+                            Obtener nuevos mensajes
+                        </Button>
+                    </Box>
+                </Grid>
                 <Channels
                     channelList={channelList}
                     selected={selected}
@@ -146,7 +153,7 @@ class HomePage extends React.Component {
                 }
                 <CreateChannel user={user} refresh={this.loadData} />
                 { selected !== null &&
-                    <SendMessage sendMessage2Server={this.sendMessage2Server} sending={sending}/>
+                    <SendMessage sendMessage2Server={this.sendMessage2Server} sending={sending} />
                 }
             </Grid>
         );

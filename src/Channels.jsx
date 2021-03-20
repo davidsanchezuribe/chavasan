@@ -10,18 +10,18 @@ import {
     IconButton,
     Paper
 } from '@material-ui/core';
-import { Subscriptions as SubscriptionIcon, Delete as DeleteIcon } from '@material-ui/icons';
+import { Subscriptions as SubscriptionIcon, Delete as DeleteIcon, Unsubscribe as UnsubscribeIcon } from '@material-ui/icons';
 
-const Channels = ({ channelList, selected, selectChannel, deleteChannel }) => {
+const Channels = ({ channelList, selected, selectChannel, deleteChannel, unsubscribeFromChannel }) => {
     const channels = channelList.map(channel => {
         const { uid, name, date, erase } = channel;
         const prettyDate = new Date(date).toLocaleDateString();
         return (
-            <ListItem 
-                key={uid} 
+            <ListItem
+                key={uid}
                 button
                 selected={uid === selected}
-                onClick={() => {selectChannel(uid)}}
+                onClick={() => { selectChannel(uid) }}
             >
                 <ListItemAvatar>
                     <SubscriptionIcon />
@@ -30,10 +30,16 @@ const Channels = ({ channelList, selected, selectChannel, deleteChannel }) => {
                     primary={name}
                     secondary={`creado el ${prettyDate}`}
                 />
-                { erase &&
-                    <ListItemSecondaryAction onClick={() => {deleteChannel(uid)}}>
+                { erase ?
+                    <ListItemSecondaryAction onClick={() => { deleteChannel(uid) }}>
                         <IconButton edge="end" aria-label="delete">
                             <DeleteIcon />
+                        </IconButton>
+                    </ListItemSecondaryAction>
+                    :
+                    <ListItemSecondaryAction onClick={() => { unsubscribeFromChannel(uid) }}>
+                        <IconButton edge="end" aria-label="delete">
+                            <UnsubscribeIcon />
                         </IconButton>
                     </ListItemSecondaryAction>
                 }
@@ -42,16 +48,16 @@ const Channels = ({ channelList, selected, selectChannel, deleteChannel }) => {
     })
     return (
 
-            <Grid item xs={12} md={4}>
-                        <Paper style={{ margin: 10 }}>
+        <Grid item xs={12} md={4}>
+            <Paper style={{ margin: 10 }}>
                 <Typography variant="h6" >
                     Canales a los que pertenece
                 </Typography>
                 <List>
                     {channels}
                 </List>
-                </Paper>
-            </Grid>
+            </Paper>
+        </Grid>
     );
 }
 

@@ -5,6 +5,7 @@ import Channels from './Channels';
 import ChannelMessages from './ChannelMessages';
 import CreateChannel from './CreateChannel';
 import SendMessage from './SendMessage';
+import SubscribeToChannel from './SubscribeToChannel';
 import { Grid, Button, Box } from '@material-ui/core';
 
 class HomePage extends React.Component {
@@ -15,6 +16,7 @@ class HomePage extends React.Component {
         this.setData = this.setData.bind(this);
         this.selectChannel = this.selectChannel.bind(this);
         this.deleteChannel = this.deleteChannel.bind(this);
+        this.unsubscribeFromChannel = this.unsubscribeFromChannel.bind(this);
         this.sendMessage2Server = this.sendMessage2Server.bind(this);
     }
     componentDidMount() {
@@ -93,6 +95,26 @@ class HomePage extends React.Component {
             //this.props.showAlert(`Error in sending data to server: ${err.message}`);
         });
     }
+    unsubscribeFromChannel(uid){
+        const { user } = this.props;
+        const { backendURL, backendPort } = env;
+        fetch(`http://${backendURL}:${backendPort}/queue/unsubscribe`, {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ uidchannel: uid, uiduser: user }),
+        }).then((response) => {
+            if (response.ok) {
+                this.loadData();
+            } else {
+                response.json().then((error) => {
+                    alert(`Failed to add issue: ${error.message}`); // eslint-disable-line no-alert
+                    //this.props.showAlert(`Failed to add issue: ${error.message}`);
+                });
+            }
+        }).catch((err) => {
+            //this.props.showAlert(`Error in sending data to server: ${err.message}`);
+        });
+    }
 
     sendMessage2Server(message) {
         this.setState({ sending: true });
@@ -144,16 +166,18 @@ class HomePage extends React.Component {
                     selected={selected}
                     selectChannel={this.selectChannel}
                     deleteChannel={this.deleteChannel}
+                    unsubscribeFromChannel={this.unsubscribeFromChannel}
                 />
-                { selected !== null &&
-                    <ChannelMessages
-                        messages={messages}
-                        users={users}
-                    />
-                }
                 <CreateChannel user={user} refresh={this.loadData} />
+                <SubscribeToChannel user={user} refresh={this.loadData} />
                 { selected !== null &&
-                    <SendMessage sendMessage2Server={this.sendMessage2Server} sending={sending} />
+                    <React.Fragment>
+                        <ChannelMessages
+                            messages={messages}
+                            users={users}
+                        />
+                        <SendMessage sendMessage2Server={this.sendMessage2Server} sending={sending} />
+                    </React.Fragment>
                 }
             </Grid>
         );

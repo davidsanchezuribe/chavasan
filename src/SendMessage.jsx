@@ -11,7 +11,7 @@ import { Send as SendIcon } from '@material-ui/icons';
 const SendMessage = ({sendMessage2Server, sending}) => {
     const [message, setMessage] = useState('');
     return (
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={6}>
             <Paper style={{ margin: 10 }}>
                 <FormControl fullWidth variant="outlined">
                     <InputLabel htmlFor="send-message">Enviar un mensaje</InputLabel>

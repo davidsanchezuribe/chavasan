@@ -37,7 +37,7 @@ const ChannelMessages = ({ messages, users }) => {
         )
     });
     return (
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={6}>
             <Paper style={{ margin: 10 }}>
             <Typography variant="h6" >
                 Mensajes nuevos en este canal

@@ -27,10 +27,10 @@ class CreateChannel extends React.Component {
             this.setState({loading: false});
             return;
         }
-        const { backendURL, backendPort } = env;
+        const { backendURL, backendPort, prefix } = env;
         const { user, refresh } = this.props;
         const body = JSON.stringify({ name: channelName, owner: user });
-        fetch(`http://${backendURL}:${backendPort}/queue/create`, {
+        fetch(`${prefix}://${backendURL}:${backendPort}/queue/create`, {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body,

@@ -115,17 +115,16 @@ class HomePage extends React.Component {
             //this.props.showAlert(`Error in sending data to server: ${err.message}`);
         });
     }
-
+    // SEBAS
     sendMessage2Server(message) {
         this.setState({ sending: true });
-        const { backendURL, backendPort } = env;
-
+        const { backendURL, backendPort, prefix } = env;
         const { user } = this.props;
+        // Encriptar el mensaje aquí usando el usuario como llave
         const { selected } = this.state;
         const body = JSON.stringify({ channeluid: selected, memberuid: user, content: message });
-        console.log(body);
 
-        fetch(`http://${backendURL}:${backendPort}/queue/sendmessage`, {
+        fetch(`${prefix}://${backendURL}:${backendPort}/queue/sendmessage`, {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body,

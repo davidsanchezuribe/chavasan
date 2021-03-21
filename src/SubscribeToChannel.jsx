@@ -20,11 +20,11 @@ class SubscribeToChannel extends React.Component {
         this.state = { channels: [], selected: '', loading: false };
         this.subscribeToChannel = this.subscribeToChannel.bind(this);
         this.loadData = this.loadData.bind(this);
+        
     }
 
     componentDidMount(){
         this.loadData();
-
     }
 
     loadData(){

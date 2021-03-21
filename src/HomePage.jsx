@@ -156,7 +156,7 @@ class HomePage extends React.Component {
                 <Grid style={{ margin: 10 }} item xs={12} md={12}>
                     <Box textAlign='center'>
                         <Button variant="contained" color="primary" onClick={()=>{this.loadData()}}>
-                            Obtener nuevos mensajes
+                            Obtener nuevos anuncios
                         </Button>
                     </Box>
                 </Grid>

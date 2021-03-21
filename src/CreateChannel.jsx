@@ -18,13 +18,13 @@ class CreateChannel extends React.Component {
         this.createChannel = this.createChannel.bind(this);
     }
 
-    createChannel(){
-        this.setState({loading: true});
+    createChannel() {
+        this.setState({ loading: true });
         const { channelName } = this.state;
 
-        if(channelName === ''){
+        if (channelName === '') {
             alert('Debe especificar un nombre');
-            this.setState({loading: false});
+            this.setState({ loading: false });
             return;
         }
         const { backendURL, backendPort, prefix } = env;
@@ -36,7 +36,8 @@ class CreateChannel extends React.Component {
             body,
         }).then((response) => {
             if (response.ok) {
-                this.setState({loading: false});
+                this.setState({ loading: false });
+                this.setState({ channelName: '' })
                 refresh();
             } else {
                 response.json().then((error) => {
@@ -46,58 +47,58 @@ class CreateChannel extends React.Component {
             }
         }).catch((err) => {
             //this.props.showAlert(`Error in sending data to server: ${err.message}`);
-            this.setState({loading: false});
+            this.setState({ loading: false });
         });
     }
     render() {
         const { channelName, loading } = this.state;
         return (
             <Grid item xs={12} md={4}>
-            <Paper style={{ margin: 10 }}>
-                <Typography variant="h6" >
-                    Crear un canal
+                <Paper style={{ margin: 10 }}>
+                    <Typography variant="h6" >
+                        Crear una temática
                 </Typography>
-                <FormControl fullWidth variant="outlined" style={{marginTop: 10}}>
-                    <InputLabel htmlFor="channel-name">Nombre del Canal</InputLabel>
-                    <OutlinedInput
-                        id="channel-name"
-                        value={channelName}
-                        label={'Nombre del Canal'}
-                        onChange={(e) => { this.setState({ channelName: e.target.value }) }}
-                    />
-                </FormControl>
-                <Grid container justify="center">
-                    <Button
-                        style={{ margin: 10 }}
-                        variant="contained"
-                        color="default"
-                        onClick={() => this.setState({ channelName: ''})}
-                    >
-                        Limpiar
+                    <FormControl fullWidth variant="outlined" style={{ marginTop: 10 }}>
+                        <InputLabel htmlFor="channel-name">Nombre de la temática</InputLabel>
+                        <OutlinedInput
+                            id="channel-name"
+                            value={channelName}
+                            label={'Nombre del Canal'}
+                            onChange={(e) => { this.setState({ channelName: e.target.value }) }}
+                        />
+                    </FormControl>
+                    <Grid container justify="center">
+                        <Button
+                            style={{ margin: 10 }}
+                            variant="contained"
+                            color="default"
+                            onClick={() => this.setState({ channelName: '' })}
+                        >
+                            Limpiar
                 </Button>
-                    <Button
-                        style={{ margin: 10 }}
-                        variant="contained"
-                        color="primary"
-                        disabled={loading}
-                        onClick={() => this.createChannel()}
-                        
-                    >
-                        Crear Canal
+                        <Button
+                            style={{ margin: 10 }}
+                            variant="contained"
+                            color="primary"
+                            disabled={loading}
+                            onClick={() => this.createChannel()}
+
+                        >
+                            Crear
                 </Button>
-                </Grid>
-                {loading && (
-                    <CircularProgress
-                        size={48}
-                        style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            marginTop: -12,
-                            marginLeft: -12,
-                        }}
-                    />
-                )}
+                    </Grid>
+                    {loading && (
+                        <CircularProgress
+                            size={48}
+                            style={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                marginTop: -12,
+                                marginLeft: -12,
+                            }}
+                        />
+                    )}
                 </Paper>
             </Grid>
         );

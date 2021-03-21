@@ -51,7 +51,7 @@ const Channels = ({ channelList, selected, selectChannel, deleteChannel, unsubsc
         <Grid item xs={12} md={4}>
             <Paper style={{ margin: 10 }}>
                 <Typography variant="h6" >
-                    Canales a los que pertenece
+                    Temáticas a las que pertenece
                 </Typography>
                 <List>
                     {channels}

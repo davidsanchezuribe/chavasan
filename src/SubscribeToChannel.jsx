@@ -28,10 +28,10 @@ class SubscribeToChannel extends React.Component {
     }
 
     loadData(){
-        const { backendURL, backendPort } = env;
+        const { backendURL, backendPort, prefix } = env;
         const { user } = this.props;
         const body = JSON.stringify({ user });
-        fetch(`http://${backendURL}:${backendPort}/queue/listavailable`, {
+        fetch(`${prefix}://${backendURL}:${backendPort}/queue/listavailable`, {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body,
@@ -55,10 +55,10 @@ class SubscribeToChannel extends React.Component {
 
     subscribeToChannel(){
         const { selected } = this.state;
-        const { backendURL, backendPort } = env;
+        const { backendURL, backendPort, prefix } = env;
         const { user, refresh } = this.props;
         const body = JSON.stringify({ uidchannel: selected, uiduser: user });
-        fetch(`http://${backendURL}:${backendPort}/queue/subscribe`, {
+        fetch(`${prefix}://${backendURL}:${backendPort}/queue/subscribe`, {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body,

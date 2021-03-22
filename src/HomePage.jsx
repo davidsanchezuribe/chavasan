@@ -24,8 +24,8 @@ class HomePage extends React.Component {
     }
     loadData() {
         const { user } = this.props;
-        const { backendURL, backendPort } = env;
-        fetch(`http://${backendURL}:${backendPort}/queue/list`, {
+        const { backendURL, backendPort, prefix } = env;
+        fetch(`${prefix}://${backendURL}:${backendPort}/queue/list`, {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({ member: user }),
@@ -76,8 +76,8 @@ class HomePage extends React.Component {
     }
     deleteChannel(uid) {
         const { user } = this.props;
-        const { backendURL, backendPort } = env;
-        fetch(`http://${backendURL}:${backendPort}/queue/delete`, {
+        const { backendURL, backendPort, prefix } = env;
+        fetch(`${prefix}://${backendURL}:${backendPort}/queue/delete`, {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({ uid, owner: user }),
@@ -97,8 +97,8 @@ class HomePage extends React.Component {
     }
     unsubscribeFromChannel(uid){
         const { user } = this.props;
-        const { backendURL, backendPort } = env;
-        fetch(`http://${backendURL}:${backendPort}/queue/unsubscribe`, {
+        const { backendURL, backendPort, prefix } = env;
+        fetch(`${prefix}://${backendURL}:${backendPort}/queue/unsubscribe`, {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({ uidchannel: uid, uiduser: user }),

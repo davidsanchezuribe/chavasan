@@ -119,7 +119,7 @@ class SubscribeToChannel extends React.Component {
                             :
                             <div>
                                 <Typography variant="h6" >
-                                    No hay canales disponibles para subscribirse
+                                    No hay temáticas disponibles para subscribirse
                                 </Typography>
                                 <Grid container justify="center">
                                     <Button

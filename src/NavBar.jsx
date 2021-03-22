@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Home as CloseIcon, Search as SearchIcon, ExitToApp as ExitToAppIcon } from '@material-ui/icons';
+import { Close as CloseIcon, ExitToApp as ExitToAppIcon } from '@material-ui/icons';
 //import CloseIcon from '@material-ui/icons/Home';
 //import SearchIcon from '@material-ui/icons/Search';
 //import ExitToAppIcon from '@material-ui/icons/ExitToApp';

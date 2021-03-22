@@ -11,7 +11,8 @@ import {
     MenuItem,
     Button,
     CircularProgress,
-    Paper
+    Paper,
+    Box
 } from '@material-ui/core';
 
 class SubscribeToChannel extends React.Component {
@@ -20,7 +21,6 @@ class SubscribeToChannel extends React.Component {
         this.state = { channels: [], selected: '', loading: false };
         this.subscribeToChannel = this.subscribeToChannel.bind(this);
         this.loadData = this.loadData.bind(this);
-        
     }
 
     componentDidMount(){
@@ -91,6 +91,11 @@ class SubscribeToChannel extends React.Component {
         return (
             <Grid item xs={12} md={4}>
             <Paper style={{ margin: 10 }}>
+                <Box textAlign='center'>
+                    <Button variant="contained" color="primary" onClick={()=>{this.loadData()}}>
+                        Obtener los últimos canales disponibles
+                    </Button>
+                </Box>
                 {
                     channels.length > 0 ?
                         <div>

@@ -147,7 +147,7 @@ class HomePage extends React.Component {
     }
 
     render() {
-        const { user } = this.props;
+        const { user, toast } = this.props;
         const { channelList, selected, channelMessages, channelUsers, sending } = this.state;
         const messages = selected ? channelMessages[selected] : [];
         const users = selected ? channelUsers[selected] : {};
@@ -167,7 +167,7 @@ class HomePage extends React.Component {
                     deleteChannel={this.deleteChannel}
                     unsubscribeFromChannel={this.unsubscribeFromChannel}
                 />
-                <CreateChannel user={user} refresh={this.loadData} />
+                <CreateChannel user={user} refresh={this.loadData} toast={toast} />
                 <SubscribeToChannel user={user} refresh={this.loadData} />
                 { selected !== null &&
                     <React.Fragment>

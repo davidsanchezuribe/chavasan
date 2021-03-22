@@ -55,7 +55,7 @@ const RoutedApp = () => {
       { user !== null
         ? (
           < Router basepath={basepath}>
-            <HomePage path="/" user={user}/>
+            <HomePage path="/" user={user} toast={toast}/>
             <NoMatch default />
           </Router>
         ) : (

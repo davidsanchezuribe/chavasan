@@ -28,7 +28,7 @@ class CreateChannel extends React.Component {
             return;
         }
         const { backendURL, backendPort, prefix } = env;
-        const { user, refresh } = this.props;
+        const { user, refresh, toast } = this.props;
         const body = JSON.stringify({ name: channelName, owner: user });
         fetch(`${prefix}://${backendURL}:${backendPort}/queue/create`, {
             method: 'POST',
@@ -39,13 +39,11 @@ class CreateChannel extends React.Component {
                 this.setState({loading: false});
                 refresh();
             } else {
-                response.json().then((error) => {
-                    alert(`Failed to add issue: ${error.message}`); // eslint-disable-line no-alert
-                    //this.props.showAlert(`Failed to add issue: ${error.message}`);
-                });
+                toast('El nombre de la temática ya está tomado');
+                this.setState({loading: false});
             }
         }).catch((err) => {
-            //this.props.showAlert(`Error in sending data to server: ${err.message}`);
+            toast(`Failed to add issue: ${err}`); // eslint-disable-line no-alert
             this.setState({loading: false});
         });
     }

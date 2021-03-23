@@ -61,7 +61,7 @@ export default function NavBar(props) {
         className={classes.title}
         align="center"
       >
-        Servicio de mensajería
+        Administración de anuncios
         </Typography>
       <IconButton
           color="inherit"

@@ -8,7 +8,7 @@ import {
     IconButton
 } from '@material-ui/core';
 import { Send as SendIcon } from '@material-ui/icons';
-const SendMessage = ({sendMessage2Server, sending}) => {
+const SendMessage = ({ sendMessage2Server, sending }) => {
     const [message, setMessage] = useState('');
     return (
         <Grid item xs={12} md={6}>
@@ -22,7 +22,7 @@ const SendMessage = ({sendMessage2Server, sending}) => {
                         onChange={(e) => setMessage(e.target.value)}
                     />
                 </FormControl>
-                <IconButton onClick={()=>{sendMessage2Server(message)}}>
+                <IconButton onClick={() => { sendMessage2Server(message) }}>
                     <SendIcon />
                 </IconButton>
             </Paper>

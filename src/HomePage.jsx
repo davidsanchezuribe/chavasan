@@ -66,7 +66,12 @@ class HomePage extends React.Component {
 
         const channelMessages = channels.reduce((acum, channel) => {
             const { uid, messages } = channel;
-            acum[uid] = messages;
+            const decryptMessages = messages.map(message => {
+                const { text } = message;
+                const cypherMessage = CryptoJS.AES.decrypt(text, user).toString(CryptoJS.enc.Utf8);
+                return {...message, text: cypherMessage};
+            })
+            acum[uid] = decryptMessages;
             return acum;
         }, {});
         this.setState({ channelList, channelMessages, channelUsers, selected: selectedExist ? selected : null });

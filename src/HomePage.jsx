@@ -7,6 +7,7 @@ import CreateChannel from './CreateChannel';
 import SendMessage from './SendMessage';
 import SubscribeToChannel from './SubscribeToChannel';
 import { Grid, Button, Box } from '@material-ui/core';
+import CryptoJS from 'crypto-js';
 
 class HomePage extends React.Component {
     constructor() {
@@ -121,9 +122,9 @@ class HomePage extends React.Component {
         const { backendURL, backendPort, prefix } = env;
         const { user } = this.props;
         // Encriptar el mensaje aquí usando el usuario como llave
+        const cypherMessage = CryptoJS.AES.encrypt(message, user).toString();
         const { selected } = this.state;
-        const body = JSON.stringify({ channeluid: selected, memberuid: user, content: message });
-
+        const body = JSON.stringify({ channeluid: selected, memberuid: user, content: cypherMessage });
         fetch(`${prefix}://${backendURL}:${backendPort}/queue/sendmessage`, {
             method: 'POST',
             headers: { 'content-type': 'application/json' },

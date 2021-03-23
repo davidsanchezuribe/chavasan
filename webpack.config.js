@@ -22,7 +22,8 @@ module.exports = (env = {}) => {
     },
     devtool: 'eval-cheap-module-source-map',
     resolve: {
-      extensions: ['.js', '.jsx']
+      extensions: ['.js', '.jsx'],
+      fallback: {'crypto': false}
     },
     optimization: {
       splitChunks: {

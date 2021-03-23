@@ -23,7 +23,7 @@ class SubscribeToChannel extends React.Component {
         this.loadData = this.loadData.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.loadData();
     }
 
@@ -38,7 +38,7 @@ class SubscribeToChannel extends React.Component {
         }).then((response) => {
             if (response.ok) {
                 response.json().then((channels) => {
-                    this.setState({channels});
+                    this.setState({ channels });
                 });
             } else {
                 response.json().then((error) => {
@@ -48,12 +48,12 @@ class SubscribeToChannel extends React.Component {
             }
         }).catch((err) => {
             //this.props.showAlert(`Error in sending data to server: ${err.message}`);
-            this.setState({loading: false});
-        }); 
+            this.setState({ loading: false });
+        });
     }
 
 
-    subscribeToChannel(){
+    subscribeToChannel() {
         const { selected } = this.state;
         const { backendURL, backendPort, prefix } = env;
         const { user, refresh } = this.props;
@@ -64,7 +64,7 @@ class SubscribeToChannel extends React.Component {
             body,
         }).then((response) => {
             if (response.ok) {
-                this.setState({loading: false});
+                this.setState({ loading: false });
                 this.loadData();
                 refresh();
             } else {
@@ -75,7 +75,7 @@ class SubscribeToChannel extends React.Component {
             }
         }).catch((err) => {
             //this.props.showAlert(`Error in sending data to server: ${err.message}`);
-            this.setState({loading: false});
+            this.setState({ loading: false });
         })
 
     }
@@ -93,51 +93,64 @@ class SubscribeToChannel extends React.Component {
             <Paper style={{ margin: 10 }}>
                 <Box textAlign='center'>
                     <Button variant="contained" color="primary" onClick={()=>{this.loadData()}}>
-                        Obtener los últimos canales disponibles
+                        Obtener las ultimas temáticas disponibles
                     </Button>
                 </Box>
                 {
                     channels.length > 0 ?
                         <div>
                             <Typography variant="h6" >
-                                Subscribirse a un canal
+                                Subscribirse a una temática
                             </Typography>
-                            <FormControl>
+                                <FormControl style = {{marginLeft :10}} >
                                     <Select value={selected} onChange={(e) => { this.setState({ selected: e.target.value }) }}>
                                         {channelOptions}
                                     </Select>
-                                    <FormHelperText>Seleccione uno de los canales disponibles</FormHelperText>
-                            </FormControl>
-                            <Grid container justify="center">
-                                <Button
-                                    style={{ margin: 10 }}
-                                    variant="contained"
-                                    color="primary"
-                                    disabled={loading}
-                                    onClick={() => this.subscribeToChannel()}
-                                    
-                                >
-                                    Subscribirse
+                                    <FormHelperText>Seleccione una de las temáticas disponibles</FormHelperText>
+                                </FormControl>
+                                <Grid container justify="center">
+                                    <Button
+                                        style={{ margin: 10 }}
+                                        variant="contained"
+                                        color="primary"
+                                        disabled={loading}
+                                        onClick={() => this.subscribeToChannel()}
+
+                                    >
+                                        Subscribirse
                                 </Button>
-                            </Grid>
-                        </div>
-                    : 
-                        <Typography variant="h6" >
-                            No hay canales disponibles para subscribirse
-                        </Typography>
-                }
-                {loading && (
-                    <CircularProgress
-                        size={48}
-                        style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            marginTop: -12,
-                            marginLeft: -12,
-                        }}
-                    />
-                )}
+                                </Grid>
+                            </div>
+                            :
+                            <div>
+                                <Typography variant="h6" >
+                                    No hay temáticas disponibles para subscribirse
+                                </Typography>
+                                <Grid container justify="center">
+                                    <Button
+                                        style={{ margin: 10 }}
+                                        color="primary"
+                                        variant="contained"
+                                        onClick = {() => this.loadData()}
+                                    >
+                                        Actualizar
+                                    </Button>
+                                </Grid>
+                            </div>
+                    }
+                    {loading && (
+                        <CircularProgress
+                            size={48}
+                            style={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                marginTop: -12,
+                                marginLeft: -12,
+                            }}
+                        />
+                    )}
+
                 </Paper>
             </Grid>
         );
